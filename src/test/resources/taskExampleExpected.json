@@ -1,0 +1,28 @@
+{
+  "calendar": {
+    "2011-03-21": [
+      {
+        "begin": "09:00",
+        "end": "11:00",
+        "employerId": "EMP002"
+      }
+    ],
+    "2011-03-22": [
+      {
+        "begin": "09:00",
+        "end": "11:00",
+        "employerId": "EMP002"
+      },
+      {
+        "begin": "14:00",
+        "end": "16:00",
+        "employerId": "EMP003"
+      },
+      {
+        "begin": "16:00",
+        "end": "17:00",
+        "employerId": "EMP004"
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "officeHoursBegin": "0900",
+  "officeHoursEnd": "1730",
+  "requests": [
+    {
+      "submitDate": "2011-03-17 10:17:06",
+      "meetingStartTime": "2011-03-21 09:00",
+      "employerId": "EMP1",
+      "meetingDuration": 2
+    }
+  ]
+}
