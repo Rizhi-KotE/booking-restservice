@@ -6,7 +6,7 @@ import groovy.transform.Canonical
 import java.time.LocalDateTime
 
 @Canonical
-class Request {
+class BookingRequestEntry {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime submitDate
     String employerId

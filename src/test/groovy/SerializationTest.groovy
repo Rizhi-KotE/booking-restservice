@@ -9,9 +9,9 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.util.LinkedMultiValueMap
 import rk.BookingServiceApplication
-import rk.dto.Booking
+import rk.dto.CalendarEntry
 import rk.dto.BookingRequest
-import rk.dto.BookingResponse
+import rk.dto.Calendar
 
 import java.time.LocalDate
 import java.time.LocalTime
@@ -61,15 +61,15 @@ class SerializationTest {
     }
 
     @Autowired
-    JacksonTester<BookingResponse> json
+    JacksonTester<Calendar> json
 
     @Test
     void serializationResponseTest() throws Exception {
         def map = [(LocalDate.of(2011, MARCH, 21)): [
-                new Booking(begin: LocalTime.of(9, 0),
+                new CalendarEntry(begin: LocalTime.of(9, 0),
                         end: LocalTime.of(11, 0), employerId: 'IMP1')]]
         def calendar = new LinkedMultiValueMap<>(map)
-        def response = new BookingResponse(calendar: calendar)
+        def response = new Calendar(calendar: calendar)
 
         assertThat(json.write(response)).isEqualToJson('serializationResponseTest.json')
     }

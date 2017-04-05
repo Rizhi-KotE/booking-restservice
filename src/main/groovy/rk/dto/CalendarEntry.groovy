@@ -5,8 +5,11 @@ import groovy.transform.Canonical
 
 import java.time.LocalTime
 
+/**
+ *
+ */
 @Canonical
-class Booking {
+class CalendarEntry {
     @JsonFormat(pattern = "HH:mm")
     LocalTime begin
     @JsonFormat(pattern = "HH:mm")

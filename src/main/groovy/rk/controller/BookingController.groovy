@@ -1,21 +1,24 @@
 package rk.controller
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.RequestMapping
 import rk.dto.BookingRequest
-import rk.dto.BookingResponse
+import rk.dto.Calendar
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseBody
+import rk.service.BookingService
 import rk.service.BookingServiceImpl
 
 @Controller
 class BookingController {
 
     @Autowired
-    BookingServiceImpl service
+    BookingService service
 
     @ResponseBody
-    BookingResponse calculateBooking(@RequestBody BookingRequest request) {
+    @RequestMapping(value = "/calculateBooking")
+    Calendar calculateBooking(@RequestBody BookingRequest request) {
         return service.calculateBooking(request)
     }
 }
