@@ -5,8 +5,14 @@
     {
       "submitDate": "2011-03-17 10:17:06",
       "meetingStartTime": "2011-03-21 09:00",
-      "employerId": "EMP001",
+      "employerId": "EMP1",
       "meetingDuration": 2
+    },
+    {
+      "submitDate": "2011-03-17 10:17:50",
+      "meetingStartTime": "2011-03-21 12:00",
+      "employerId": "EMP2",
+      "meetingDuration": 3
     }
   ]
 }
