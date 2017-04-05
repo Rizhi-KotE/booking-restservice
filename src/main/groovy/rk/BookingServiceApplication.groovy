@@ -3,14 +3,14 @@ package rk
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
-import rk.service.BookingService
+import rk.service.BookingServiceImpl
 
 @SpringBootApplication
 class BookingServiceApplication {
 
     @Bean
-    BookingService bookingService(){
-        new BookingService()
+    BookingServiceImpl bookingService(){
+        new BookingServiceImpl()
     }
 
     static void main(String[] args) {

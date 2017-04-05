@@ -30,6 +30,7 @@ class SerializationTest {
 
     @Test
     void deserializeRequest() {
+
         def request = mapper.readValue(new ClassPathResource("requestExample.json").getURL(),
                 BookingRequest.class)
 

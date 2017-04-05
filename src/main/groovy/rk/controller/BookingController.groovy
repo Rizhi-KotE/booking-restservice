@@ -6,13 +6,13 @@ import rk.dto.BookingResponse
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseBody
-import rk.service.BookingService
+import rk.service.BookingServiceImpl
 
 @Controller
 class BookingController {
 
     @Autowired
-    BookingService service
+    BookingServiceImpl service
 
     @ResponseBody
     BookingResponse calculateBooking(@RequestBody BookingRequest request) {

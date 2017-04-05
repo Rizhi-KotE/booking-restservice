@@ -12,13 +12,4 @@ class BookingRequest {
     LocalTime officeHoursEnd
 
     List<Request> requests
-
-    static class Request {
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime submitDate
-        String employerId
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-        LocalDateTime meetingStartTime
-        int meetingDuration
-    }
 }
