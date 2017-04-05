@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody
 import rk.service.BookingService
 import rk.service.BookingServiceImpl
 
+import javax.validation.Valid
+
 @Controller
 class BookingController {
 
@@ -18,7 +20,7 @@ class BookingController {
 
     @ResponseBody
     @RequestMapping(value = "/calculateBooking")
-    Calendar calculateBooking(@RequestBody BookingRequest request) {
+    Calendar calculateBooking(@RequestBody @Valid BookingRequest request) {
         return service.calculateBooking(request)
     }
 }
