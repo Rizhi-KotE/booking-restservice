@@ -26,7 +26,7 @@ class Meeting {
     LocalDateTime meetingDate
 
     @Column(name = 'duration')
-    double duration
+    int duration
 
     @ManyToOne
     User user;
