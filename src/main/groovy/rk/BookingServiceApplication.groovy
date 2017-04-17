@@ -2,8 +2,11 @@ package rk
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.context.annotation.Bean
-import rk.service.BookingServiceImpl
+import org.springframework.boot.autoconfigure.domain.EntityScan
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters
+
+@EntityScan(
+        basePackageClasses = [ BookingServiceApplication.class, Jsr310JpaConverters.class ])
 
 @SpringBootApplication
 class BookingServiceApplication {
