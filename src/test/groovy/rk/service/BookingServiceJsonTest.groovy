@@ -1,14 +1,14 @@
-package rk.service;
+package rk.service
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.json.JsonTest
 import org.springframework.boot.test.json.JacksonTester
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import rk.BookingServiceApplication;
-import rk.dto.BookingRequest;
+import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.junit4.SpringRunner
+import rk.BookingServiceApplication
+import rk.dto.BookingRequest
 import rk.dto.Calendar
 
 import static org.assertj.core.api.Assertions.assertThat

@@ -33,7 +33,7 @@ class MeetingServiceImpl implements MeetingService {
         repository.findOne(id)
     }
 
-    Meeting getMax(){
+    Meeting getMax() {
         repository.find()
     }
 
@@ -49,14 +49,24 @@ class MeetingServiceImpl implements MeetingService {
         repository.save(meeting)
     }
 
-    /**
-     * Exclude meeting which can't fit in office hours
-     *
-     * @param meeting - meeting that should be filtered
-     * @param beginTime - begin of office hours
-     * @param endTime - end of office hours
-     * @return - filtered list of meeting
-     */
+    @Override
+    Meeting findMaxPrevious(Meeting meeting) {
+        repository.findMaxPrevious(meeting)
+    }
+
+
+    @Override
+    Meeting findMinFollowing(Meeting meeting) {
+        repository.findMinFollowing(meeting)
+    }
+/**
+ * Exclude meeting which can't fit in office hours
+ *
+ * @param meeting - meeting that should be filtered
+ * @param beginTime - begin of office hours
+ * @param endTime - end of office hours
+ * @return - filtered list of meeting
+ */
     @PackageScope
     boolean excludeFallOutsideRequests(Meeting meeting,
                                        LocalTime beginTime,

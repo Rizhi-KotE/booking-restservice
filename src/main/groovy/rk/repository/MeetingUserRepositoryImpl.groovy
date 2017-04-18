@@ -1,35 +1,32 @@
-package rk.dao;
+package rk.repository
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
-import rk.entity.Meeting;
-import rk.entity.Room;
-import rk.entity.User;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.RowMapper
+import org.springframework.stereotype.Repository
+import rk.entity.Meeting
+import rk.entity.Room
+import rk.entity.User
 
-import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import javax.sql.DataSource
+import java.sql.Time
+import java.sql.Timestamp
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
-@Service
-public class MeetingDaoImpl implements MeetingDao {
-
+@Repository
+class MeetingUserRepositoryImpl implements MeetingCustomRepository {
     public static final String SELECT_MAX_LESS = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE user_id=? OR room_id=? AND meeting_start <= ?);";
     public static final String SELECT_MIN_BIGGER = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE user_id=? OR room_id=? AND meeting_start <= ?);";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    void setDataSource(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    RowMapper<Meeting> mapper = (resultSet, i) -> {
+    RowMapper<Meeting> mapper = {resultSet, i ->
         Meeting meet = new Meeting();
         meet.setId(resultSet.getLong("duration"));
         meet.setDuration(resultSet.getInt("duration"));
@@ -55,14 +52,15 @@ public class MeetingDaoImpl implements MeetingDao {
     };
 
     @Override
-    public Meeting findMaxPrevious(Meeting meeting) {
-        Object[] params = {meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()};
+    Meeting findMaxPrevious(Meeting meeting) {
+        Object[] params = [meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()]
         return jdbcTemplate.queryForObject(SELECT_MAX_LESS, params, mapper);
     }
 
     @Override
-    public Meeting findMinFollowing(Meeting meeting) {
-        Object[] params = {meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()};
-        return jdbcTemplate.queryForObject(SELECT_MIN_BIGGER, params, mapper);
+    Meeting findMinFollowing(Meeting meeting) {
+        Object[] params = [meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()]
+        return jdbcTemplate.queryForObject(SELECT_MIN_BIGGER, params, mapper)
     }
+
 }
