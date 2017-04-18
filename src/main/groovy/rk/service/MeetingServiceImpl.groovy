@@ -33,13 +33,17 @@ class MeetingServiceImpl implements MeetingService {
         repository.findOne(id)
     }
 
+    Meeting getMax(){
+        repository.find()
+    }
+
     @Override
     Meeting create(Meeting meeting) {
         def room = roomRepository.findOne(meeting.room.id)
-        if (excludeFallOutsideRequests(meeting, room.officeHoursBegin, room.officeHoursEnd)) {
+        if (!excludeFallOutsideRequests(meeting, room.officeHoursBegin, room.officeHoursEnd)) {
             throw new BookingException()
         }
-        if (excludeOverlappedRequests(meeting)) {
+        if (!excludeOverlappedRequests(meeting)) {
             throw new BookingException()
         }
         repository.save(meeting)
@@ -59,9 +63,9 @@ class MeetingServiceImpl implements MeetingService {
                                        LocalTime endTime) {
 
         def meetingTime = meeting.meetingDate.toLocalTime()
-        if (beginTime > meetingTime) false
+        if (beginTime > meetingTime) return false
         def meetingEndTime = meeting.meetingDate.plusHours(meeting.duration).toLocalTime()
-        if (endTime < meetingEndTime) false
+        if (endTime < meetingEndTime) return false
         true
     }
 
@@ -74,16 +78,16 @@ class MeetingServiceImpl implements MeetingService {
     @PackageScope
     boolean excludeOverlappedRequests(Meeting meeting) {
 
-        def higherKey = repository.findMaxPrevious(meeting.submitDate)
-        if (higherKey != null) {
+        def following = repository.findMinFollowing(meeting)
+        if (following != null) {
             def endOfMeeting = meeting.meetingDate.plusHours(meeting.duration)
-            if (higherKey < endOfMeeting) false
+            if (following.meetingDate < endOfMeeting) return false
         }
         //Need duration of previous meeting
-        def lowerEntry = repository.findMinFollowing(meeting.submitDate)
-        if (lowerEntry != null) {
-            def endOfLowerEntry = lowerEntry.submitDate.plusHours(lowerEntry.duration)
-            if (meeting.meetingDate < endOfLowerEntry) false
+        def previous = repository.findMaxPrevious(meeting)
+        if (previous != null) {
+            def endOfLowerEntry = previous.meetingDate.plusHours(previous.duration)
+            if (meeting.meetingDate < endOfLowerEntry) return false
         }
         true
     }

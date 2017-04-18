@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
+import rk.dao.MeetingDao
 import rk.dto.MeetingDto
 import rk.entity.Meeting
 import rk.entity.User
@@ -19,6 +20,19 @@ class MettingRestController {
 
     @Autowired
     MeetingService service;
+
+    @Autowired
+    MeetingDao dao
+
+    @RequestMapping(value = "/maxless")
+    Meeting getMaxLess(@RequestBody Meeting dto){
+        dao.findMaxPrevious(dto)
+    }
+
+    @RequestMapping(value = "/minbigger")
+    Meeting getMinBigger(@RequestBody Meeting dto){
+        dao.findMinFollowing(dto)
+    }
 
     @RequestMapping
     List<Meeting> getList(){
