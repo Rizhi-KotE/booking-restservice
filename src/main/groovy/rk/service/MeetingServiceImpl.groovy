@@ -58,9 +58,9 @@ class MeetingServiceImpl implements MeetingService {
                                        LocalTime beginTime,
                                        LocalTime endTime) {
 
-        def meetingTime = req.meetingStartTime.toLocalTime()
+        def meetingTime = meeting.meetingDate.toLocalTime()
         if (beginTime > meetingTime) false
-        def meetingEndTime = req.meetingStartTime.plusHours(req.meetingDuration).toLocalTime()
+        def meetingEndTime = meeting.meetingDate.plusHours(meeting.duration).toLocalTime()
         if (endTime < meetingEndTime) false
         true
     }

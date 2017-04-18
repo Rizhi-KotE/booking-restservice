@@ -11,10 +11,10 @@ import java.time.LocalDateTime
 
 interface MeetingRepository extends JpaRepository<Meeting, Long>{
 
-    @Query("SELECT m FROM Meeting WHERE m.submitDate IN (SELECT MAX(submitDate) FROM meetings) AND submitDate < :submitDate")
+    @Query("SELECT m FROM Meeting m WHERE m.submitDate IN (SELECT MAX(submitDate) FROM Meeting) AND submitDate < :submitDate")
     Meeting findMaxPrevious(@Param(value = 'submitDate') LocalDateTime submitDate)
 
-    @Query("SELECT m FROM Meeting WHERE m.submitDate IN (SELECT MIN(submitDate) FROM meetings) AND submitDate > :submitDate")
+    @Query("SELECT m FROM Meeting m WHERE m.submitDate IN (SELECT MIN(submitDate) FROM Meeting) AND submitDate > :submitDate")
     Meeting findMinFollowing(@Param(value = 'submitDate') LocalDateTime submitDate)
 
 }
