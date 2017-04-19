@@ -16,9 +16,11 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 @Repository
-class MeetingUserRepositoryImpl implements MeetingCustomRepository {
-    public static final String SELECT_MAX_LESS = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE user_id=? OR room_id=? AND meeting_start <= ?);";
-    public static final String SELECT_MIN_BIGGER = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE user_id=? OR room_id=? AND meeting_start <= ?);";
+class MeetingRepositoryImpl implements MeetingCustomRepository {
+    public static
+    final String SELECT_MAX_LESS = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE (user_id=? OR room_id=?) AND meeting_start <= ?);";
+    public static
+    final String SELECT_MIN_BIGGER = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE (user_id=? OR room_id=?) AND meeting_start >= ?);";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -26,7 +28,7 @@ class MeetingUserRepositoryImpl implements MeetingCustomRepository {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    RowMapper<Meeting> mapper = {resultSet, i ->
+    RowMapper<Meeting> mapper = { resultSet, i ->
         Meeting meet = new Meeting();
         meet.setId(resultSet.getLong("duration"));
         meet.setDuration(resultSet.getInt("duration"));
@@ -54,13 +56,15 @@ class MeetingUserRepositoryImpl implements MeetingCustomRepository {
     @Override
     Meeting findMaxPrevious(Meeting meeting) {
         Object[] params = [meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()]
-        return jdbcTemplate.queryForObject(SELECT_MAX_LESS, params, mapper);
+        def list =  jdbcTemplate.query(SELECT_MAX_LESS, params, mapper)
+        list.size() == 1 ? list.get(0) : null
     }
 
     @Override
     Meeting findMinFollowing(Meeting meeting) {
         Object[] params = [meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()]
-        return jdbcTemplate.queryForObject(SELECT_MIN_BIGGER, params, mapper)
+        def list = jdbcTemplate.query(SELECT_MIN_BIGGER, params, mapper)
+        list.size() == 1 ? list.get(0) : null
     }
 
 }
