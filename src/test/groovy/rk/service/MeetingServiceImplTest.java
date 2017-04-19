@@ -231,4 +231,37 @@ public class MeetingServiceImplTest {
         meetingService.create(meeting);
 
     }
+
+    @Test
+    public void saveWithOneFollowingFarFarAway() throws Exception {
+        Room room = new Room();
+        room.setOfficeHoursBegin(LocalTime.of(1, 0));
+        room.setOfficeHoursEnd(LocalTime.of(23, 0));
+
+        Meeting meeting = new Meeting();
+        meeting.setRoom(room);
+        meeting.setDuration(2);
+        meeting.setMeetingDate(LocalDateTime.of(0, 1, 1, 1, 0));
+
+        Meeting following = new Meeting();
+        following.setMeetingDate(LocalDateTime.of(1, 1, 20, 9, 0));
+        following.setDuration(2);
+
+        when(repository.findMaxPrevious(any(Meeting.class)))
+                .thenReturn(null);
+        when(repository.findMinFollowing(any(Meeting.class)))
+                .thenReturn(following);
+
+        when(roomRepository.findOne(any(Long.class)))
+                .thenReturn(room);
+
+        meetingService.setRepository(repository);
+
+        meetingService.create(meeting);
+
+        verify(repository, times(1))
+                .save(any(Meeting.class));
+
+    }
+
 }

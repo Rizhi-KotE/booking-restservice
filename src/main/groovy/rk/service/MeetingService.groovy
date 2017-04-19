@@ -1,8 +1,9 @@
 package rk.service
 
-import org.springframework.data.repository.query.Param
-import rk.dto.MeetingDto
+import rk.dto.MeetingRestParams
 import rk.entity.Meeting
+
+import javax.validation.Valid
 
 interface MeetingService {
     List<Meeting> getList()
@@ -14,4 +15,6 @@ interface MeetingService {
     Meeting findMaxPrevious(Meeting meeting)
 
     Meeting findMinFollowing(Meeting meeting)
+
+    List<Meeting> findAll(MeetingRestParams params)
 }

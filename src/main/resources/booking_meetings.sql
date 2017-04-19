@@ -1,0 +1,11 @@
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (1, 2, '2017-04-18 12:45:33', '2011-03-17 10:17:06', 1, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (2, 2, '2017-04-18 12:45:37', '2011-03-17 20:11:00', 1, 2);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (3, 2, '2017-04-18 12:45:38', '2011-03-17 01:00:00', 2, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (4, 2, '2017-04-18 12:45:39', '2011-03-17 23:00:00', 2, 2);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (5, 2, '2011-03-23 10:00:00', '2011-03-17 10:17:06', 1, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (6, 2, '2011-03-23 12:00:00', '2011-03-17 10:17:06', 1, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (7, 2, '2011-03-23 14:00:00', '2011-03-17 10:17:06', 1, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (8, 2, '2011-03-24 09:00:00', '2011-03-17 10:17:06', 1, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (9, 2, '2011-03-24 11:00:00', '2011-03-17 10:17:06', 1, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (10, 2, '2011-03-24 13:00:00', '2011-03-17 10:17:06', 1, 1);
+INSERT INTO booking.meetings (id, duration, meeting_start, submit_date, room_id, user_id) VALUES (11, 2, '2011-03-24 15:00:00', '2011-03-17 10:17:06', 1, 1);

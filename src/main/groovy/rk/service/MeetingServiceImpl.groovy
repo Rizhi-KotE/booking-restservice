@@ -2,14 +2,20 @@ package rk.service
 
 import groovy.transform.PackageScope
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import rk.dto.MeetingRestParams
 import rk.entity.Meeting
 import rk.exception.BookingException
 import rk.repository.MeetingRepository
 import rk.repository.RoomRepository
 import rk.repository.UserRepository
 
+import javax.validation.Valid
 import java.time.LocalTime
+
+import static rk.service.MeetingPredicateBuilder.buildPredicate
 
 @Service
 class MeetingServiceImpl implements MeetingService {
@@ -31,10 +37,6 @@ class MeetingServiceImpl implements MeetingService {
     @Override
     Meeting getById(long id) {
         repository.findOne(id)
-    }
-
-    Meeting getMax() {
-        repository.find()
     }
 
     @Override
@@ -59,6 +61,14 @@ class MeetingServiceImpl implements MeetingService {
     Meeting findMinFollowing(Meeting meeting) {
         repository.findMinFollowing(meeting)
     }
+
+    @Override
+    List<Meeting> findAll(@Valid  MeetingRestParams options) {
+        def sort = options.sortColumn==null ? null : new Sort(options.direction, options.sortColumn)
+        def page = options.page==null ? null : new PageRequest(options.page, options.pageSize, sort)
+        repository.findAll(buildPredicate(options), page).toList()
+    }
+
 /**
  * Exclude meeting which can't fit in office hours
  *
