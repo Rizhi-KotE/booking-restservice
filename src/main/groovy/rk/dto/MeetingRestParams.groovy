@@ -2,7 +2,6 @@ package rk.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.data.domain.Sort
-
 import javax.validation.constraints.AssertTrue
 import java.time.LocalDateTime
 

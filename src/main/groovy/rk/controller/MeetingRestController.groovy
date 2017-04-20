@@ -2,12 +2,17 @@ package rk.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
+
 import rk.dto.MeetingRestParams
 import rk.entity.Meeting
 import rk.service.MeetingService
 
-import javax.validation.Valid
+import org.springframework.validation.Validator;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST
 
@@ -19,7 +24,10 @@ class MeetingRestController {
     ObjectMapper mapper
 
     @Autowired
-    MeetingService service;
+    MeetingService service
+
+    @Autowired
+    Validator validator;
 
     @RequestMapping(value = "/maxless")
     Meeting getMaxLess(@RequestBody Meeting dto) {
@@ -38,8 +46,7 @@ class MeetingRestController {
      */
     @RequestMapping
     List<Meeting> getList(@RequestParam Map<String, String> params) {
-        def dto = mapper.convertValue(params, MeetingRestParams.class)
-        service.findAll(dto)
+        service.findAll(mapper.convertValue(params, MeetingRestParams.class))
     }
 
     @RequestMapping(value = "/{id}")

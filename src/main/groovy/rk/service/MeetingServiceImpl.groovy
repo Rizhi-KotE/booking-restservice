@@ -42,24 +42,27 @@ class MeetingServiceImpl implements MeetingService {
     @Override
     Meeting create(Meeting meeting) {
         def room = roomRepository.findOne(meeting.room.id)
+        if(room==null){
+            throw new BookingException("no_room")
+        }
         if (!excludeFallOutsideRequests(meeting, room.officeHoursBegin, room.officeHoursEnd)) {
-            throw new BookingException()
+            throw new BookingException("fall_outside_office_hours")
         }
         if (!excludeOverlappedRequests(meeting)) {
-            throw new BookingException()
+            throw new BookingException("overlapped_with_meeting")
         }
         repository.save(meeting)
     }
 
     @Override
     Meeting findMaxPrevious(Meeting meeting) {
-        repository.findMaxPrevious(meeting)
+        repository.closestPreviousMeeting(meeting)
     }
 
 
     @Override
     Meeting findMinFollowing(Meeting meeting) {
-        repository.findMinFollowing(meeting)
+        repository.closestFollowingMeeting(meeting)
     }
 
     @Override
@@ -98,13 +101,13 @@ class MeetingServiceImpl implements MeetingService {
     @PackageScope
     boolean excludeOverlappedRequests(Meeting meeting) {
 
-        def following = repository.findMinFollowing(meeting)
+        def following = repository.closestFollowingMeeting(meeting)
         if (following != null) {
             def endOfMeeting = meeting.meetingDate.plusHours(meeting.duration)
             if (following.meetingDate < endOfMeeting) return false
         }
         //Need duration of previous meeting
-        def previous = repository.findMaxPrevious(meeting)
+        def previous = repository.closestPreviousMeeting(meeting)
         if (previous != null) {
             def endOfLowerEntry = previous.meetingDate.plusHours(previous.duration)
             if (meeting.meetingDate < endOfLowerEntry) return false
