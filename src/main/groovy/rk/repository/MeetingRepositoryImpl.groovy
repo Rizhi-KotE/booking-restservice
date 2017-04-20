@@ -1,6 +1,7 @@
 package rk.repository
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
@@ -8,6 +9,10 @@ import rk.entity.Meeting
 import rk.entity.Room
 import rk.entity.User
 
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
 import javax.sql.DataSource
 import java.sql.Time
 import java.sql.Timestamp
@@ -18,9 +23,13 @@ import java.time.ZoneId
 @Repository
 class MeetingRepositoryImpl implements MeetingCustomRepository {
     public static
-    final String SELECT_MAX_LESS = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE (user_id=? OR room_id=?) AND meeting_start <= ?);";
+    final String SELECT_MAX_LESS = "SELECT * FROM meetings_view WHERE meeting_start " +
+            "IN (SELECT MAX(meeting_start) FROM meetings_view  " +
+            "WHERE (user_id=? OR room_id=?) AND meeting_start <= ?);";
     public static
-    final String SELECT_MIN_BIGGER = "SELECT * FROM meetings_view WHERE submit_date IN (SELECT MAX(submit_date) FROM meetings_view  WHERE (user_id=? OR room_id=?) AND meeting_start >= ?);";
+    final String SELECT_MIN_BIGGER = "SELECT * FROM meetings_view WHERE meeting_start " +
+            "IN (SELECT MAX(meeting_start) FROM meetings_view  " +
+            "WHERE (user_id=? OR room_id=?) AND meeting_start >= ?);";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -54,14 +63,14 @@ class MeetingRepositoryImpl implements MeetingCustomRepository {
     };
 
     @Override
-    Meeting findMaxPrevious(Meeting meeting) {
+    Meeting closestPreviousMeeting(Meeting meeting) {
         Object[] params = [meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()]
         def list =  jdbcTemplate.query(SELECT_MAX_LESS, params, mapper)
         list.size() == 1 ? list.get(0) : null
     }
 
     @Override
-    Meeting findMinFollowing(Meeting meeting) {
+    Meeting closestFollowingMeeting(Meeting meeting) {
         Object[] params = [meeting.getUser().getId(), meeting.getRoom().getId(), meeting.getMeetingDate()]
         def list = jdbcTemplate.query(SELECT_MIN_BIGGER, params, mapper)
         list.size() == 1 ? list.get(0) : null

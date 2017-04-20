@@ -58,9 +58,9 @@ public class MeetingServiceImplTest {
         room.setOfficeHoursEnd(LocalTime.of(23, 0));
         meeting.setMeetingDate(LocalDateTime.of(0, 1, 1, 2, 0));
 
-        when(repository.findMaxPrevious(any(Meeting.class)))
+        when(repository.closestPreviousMeeting(any(Meeting.class)))
                 .thenReturn(null);
-        when(repository.findMinFollowing(any(Meeting.class)))
+        when(repository.closestFollowingMeeting(any(Meeting.class)))
                 .thenReturn(null);
 
         when(roomRepository.findOne(any(Long.class)))
@@ -88,9 +88,9 @@ public class MeetingServiceImplTest {
         following.setMeetingDate(LocalDateTime.of(0, 1, 1, 23, 0));
         following.setDuration(2);
 
-        when(repository.findMaxPrevious(any(Meeting.class)))
+        when(repository.closestPreviousMeeting(any(Meeting.class)))
                 .thenReturn(previous);
-        when(repository.findMinFollowing(any(Meeting.class)))
+        when(repository.closestFollowingMeeting(any(Meeting.class)))
                 .thenReturn(following);
 
         when(roomRepository.findOne(any(Long.class)))
@@ -118,9 +118,9 @@ public class MeetingServiceImplTest {
         following.setMeetingDate(LocalDateTime.of(0, 1, 1, 3, 0));
         following.setDuration(2);
 
-        when(repository.findMaxPrevious(any(Meeting.class)))
+        when(repository.closestPreviousMeeting(any(Meeting.class)))
                 .thenReturn(previous);
-        when(repository.findMinFollowing(any(Meeting.class)))
+        when(repository.closestFollowingMeeting(any(Meeting.class)))
                 .thenReturn(following);
 
         when(roomRepository.findOne(any(Long.class)))
@@ -150,9 +150,9 @@ public class MeetingServiceImplTest {
         following.setMeetingDate(LocalDateTime.of(0, 1, 1, 11, 0));
         following.setDuration(2);
 
-        when(repository.findMaxPrevious(any(Meeting.class)))
+        when(repository.closestPreviousMeeting(any(Meeting.class)))
                 .thenReturn(previous);
-        when(repository.findMinFollowing(any(Meeting.class)))
+        when(repository.closestFollowingMeeting(any(Meeting.class)))
                 .thenReturn(following);
 
         when(roomRepository.findOne(any(Long.class)))
@@ -185,9 +185,9 @@ public class MeetingServiceImplTest {
         following.setMeetingDate(LocalDateTime.of(0, 1, 1, 11, 0));
         following.setDuration(2);
 
-        when(repository.findMaxPrevious(any(Meeting.class)))
+        when(repository.closestPreviousMeeting(any(Meeting.class)))
                 .thenReturn(previous);
-        when(repository.findMinFollowing(any(Meeting.class)))
+        when(repository.closestFollowingMeeting(any(Meeting.class)))
                 .thenReturn(following);
 
         when(roomRepository.findOne(any(Long.class)))
@@ -218,9 +218,9 @@ public class MeetingServiceImplTest {
         following.setMeetingDate(LocalDateTime.of(0, 1, 1, 9, 0));
         following.setDuration(2);
 
-        when(repository.findMaxPrevious(any(Meeting.class)))
+        when(repository.closestPreviousMeeting(any(Meeting.class)))
                 .thenReturn(previous);
-        when(repository.findMinFollowing(any(Meeting.class)))
+        when(repository.closestFollowingMeeting(any(Meeting.class)))
                 .thenReturn(following);
 
         when(roomRepository.findOne(any(Long.class)))
@@ -247,9 +247,9 @@ public class MeetingServiceImplTest {
         following.setMeetingDate(LocalDateTime.of(1, 1, 20, 9, 0));
         following.setDuration(2);
 
-        when(repository.findMaxPrevious(any(Meeting.class)))
+        when(repository.closestPreviousMeeting(any(Meeting.class)))
                 .thenReturn(null);
-        when(repository.findMinFollowing(any(Meeting.class)))
+        when(repository.closestFollowingMeeting(any(Meeting.class)))
                 .thenReturn(following);
 
         when(roomRepository.findOne(any(Long.class)))

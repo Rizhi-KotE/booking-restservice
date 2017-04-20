@@ -13,10 +13,8 @@ import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.CriteriaQuery
 import javax.persistence.criteria.Predicate
 import javax.persistence.criteria.Root
-import java.awt.print.Pageable
 import java.time.LocalDateTime
 
-import static java.lang.Long.parseLong
 import static org.springframework.data.jpa.domain.Specifications.where
 
 class MeetingPredicateBuilder {
@@ -35,15 +33,15 @@ class MeetingPredicateBuilder {
             spec = where(spec).and(byRoomId(params.roomId))
         }
         if (params.lowerDateTimeBound != null) {
-            spec = where(spec).and(byAfterTime(params.lowerDateTimeBound))
+            spec = where(spec).and(byPrecedingTime(params.lowerDateTimeBound))
         }
         if (params.upperDateTimeBound != null) {
-            spec = where(spec).and(byBeforeTime(params.upperDateTimeBound))
+            spec = where(spec).and(byFollowingTime(params.upperDateTimeBound))
         }
         spec
     }
 
-    static Specification<Meeting> byAfterTime(LocalDateTime localDateTime) {
+    static Specification<Meeting> byPrecedingTime(LocalDateTime localDateTime) {
         new Specification<Meeting>() {
             @Override
             Predicate toPredicate(Root<Meeting> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
@@ -52,7 +50,7 @@ class MeetingPredicateBuilder {
         }
     }
 
-    static Specification<Meeting> byBeforeTime(LocalDateTime localDateTime) {
+    static Specification<Meeting> byFollowingTime(LocalDateTime localDateTime) {
         new Specification<Meeting>() {
             @Override
             Predicate toPredicate(Root<Meeting> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {

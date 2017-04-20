@@ -1,0 +1,22 @@
+{
+  "name": "booking-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main/resources/static/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rizhi-KotE/booking-restservice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rizhi-KotE/booking-restservice/issues"
+  },
+  "homepage": "https://github.com/Rizhi-KotE/booking-restservice#readme",
+  "dependencies": {
+    "react": "^15.5.4"
+  }
+}
