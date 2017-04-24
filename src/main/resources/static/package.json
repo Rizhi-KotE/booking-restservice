@@ -1,0 +1,16 @@
+{
+  "name": "booking-service",
+  "version": "0.0.1",
+  "description": "Your app description",
+  "author": "You",
+  "devDependencies": {
+    "babel-core": "^5.8.*",
+    "babel-loader": "^5.3.*",
+    "webpack": "^1.12.*",
+    "webpack-dev-server": "^1.10.*"
+  },
+  "dependencies": {
+    "another-rest-client": "^0.3.2",
+    "react": "^0.13.*"
+  }
+}

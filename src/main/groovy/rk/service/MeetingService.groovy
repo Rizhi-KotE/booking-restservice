@@ -12,9 +12,7 @@ interface MeetingService {
 
     Meeting create(Meeting meetingDto)
 
-    Meeting findMaxPrevious(Meeting meeting)
-
-    Meeting findMinFollowing(Meeting meeting)
-
     List<Meeting> findAll(MeetingRestParams params)
+
+    long findOverlappedMeetings(Meeting meeting)
 }

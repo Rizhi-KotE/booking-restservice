@@ -1,6 +1,7 @@
 {
   "submitDate": "2011-03-17 10:17:06",
-  "meetingDate": "2011-03-24 15:00",
+  "meetingDateBegin": "2011-03-25 09:00",
+  "meetingDateEnd": "2011-03-25 10:00",
   "user": {
     "id": 1
   },

@@ -19,9 +19,9 @@ import static org.springframework.data.jpa.domain.Specifications.where
 
 class MeetingPredicateBuilder {
 
-    static PageRequest buildPageable(MeetingRestParams options){
+    static PageRequest buildPageable(MeetingRestParams options) {
         def sort = new Sort(options.direction, options.sortColumn)
-        new PageRequest(options.page,options.pageSize, sort)
+        new PageRequest(options.page, options.pageSize, sort)
     }
 
     static Specification<Meeting> buildPredicate(MeetingRestParams params) {
@@ -86,4 +86,20 @@ class MeetingPredicateBuilder {
         }
     }
 
+    static Specification<Meeting> countOfOverlappedMeetings(Meeting meeting) {
+        new Specification<Meeting>() {
+            @Override
+            Predicate toPredicate(Root<Meeting> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                def start = root.get(Meeting_.meetingDateBegin)
+                def constraintWithStart = cb.and(cb.lessThan(start, meeting.meetingDateBegin),
+                        cb.greaterThanOrEqualTo(start, meeting.meetingDateEnd))
+                def end = root.get(Meeting_.meetingDateEnd)
+                def constraintWithEnd = cb.and(cb.lessThan(end, meeting.meetingDateBegin),
+                        cb.greaterThan(end, meeting.meetingDateEnd))
+                def roomUserPredicate = cb.or(cb.equal(root.get(Meeting_.user).get(User_.id), meeting.user.id),
+                        cb.equal(root.get(Meeting_.room).get(Room_.id), meeting.room.id))
+                cb.and(roomUserPredicate, cb.or(constraintWithStart, constraintWithEnd))
+            }
+        }
+    }
 }

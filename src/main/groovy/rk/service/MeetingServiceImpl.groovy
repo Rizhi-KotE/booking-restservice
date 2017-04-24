@@ -16,6 +16,7 @@ import javax.validation.Valid
 import java.time.LocalTime
 
 import static rk.service.MeetingPredicateBuilder.buildPredicate
+import static rk.service.MeetingPredicateBuilder.countOfOverlappedMeetings
 
 @Service
 class MeetingServiceImpl implements MeetingService {
@@ -42,7 +43,7 @@ class MeetingServiceImpl implements MeetingService {
     @Override
     Meeting create(Meeting meeting) {
         def room = roomRepository.findOne(meeting.room.id)
-        if(room==null){
+        if (room == null) {
             throw new BookingException("no_room")
         }
         if (!excludeFallOutsideRequests(meeting, room.officeHoursBegin, room.officeHoursEnd)) {
@@ -55,23 +56,16 @@ class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    Meeting findMaxPrevious(Meeting meeting) {
-        repository.closestPreviousMeeting(meeting)
-    }
-
-
-    @Override
-    Meeting findMinFollowing(Meeting meeting) {
-        repository.closestFollowingMeeting(meeting)
-    }
-
-    @Override
-    List<Meeting> findAll(@Valid  MeetingRestParams options) {
-        def sort = options.sortColumn==null ? null : new Sort(options.direction, options.sortColumn)
-        def page = options.page==null ? null : new PageRequest(options.page, options.pageSize, sort)
+    List<Meeting> findAll(@Valid MeetingRestParams options) {
+        def sort = options.sortColumn == null ? null : new Sort(options.direction, options.sortColumn)
+        def page = options.page == null ? null : new PageRequest(options.page, options.pageSize, sort)
         repository.findAll(buildPredicate(options), page).toList()
     }
 
+    @Override
+    long findOverlappedMeetings(Meeting meeting) {
+        repository.count(countOfOverlappedMeetings(meeting))
+    }
 /**
  * Exclude meeting which can't fit in office hours
  *
@@ -85,9 +79,9 @@ class MeetingServiceImpl implements MeetingService {
                                        LocalTime beginTime,
                                        LocalTime endTime) {
 
-        def meetingTime = meeting.meetingDate.toLocalTime()
+        def meetingTime = meeting.meetingDateBegin.toLocalTime()
         if (beginTime > meetingTime) return false
-        def meetingEndTime = meeting.meetingDate.plusHours(meeting.duration).toLocalTime()
+        def meetingEndTime = meeting.meetingDateEnd.toLocalTime()
         if (endTime < meetingEndTime) return false
         true
     }
@@ -101,17 +95,6 @@ class MeetingServiceImpl implements MeetingService {
     @PackageScope
     boolean excludeOverlappedRequests(Meeting meeting) {
 
-        def following = repository.closestFollowingMeeting(meeting)
-        if (following != null) {
-            def endOfMeeting = meeting.meetingDate.plusHours(meeting.duration)
-            if (following.meetingDate < endOfMeeting) return false
-        }
-        //Need duration of previous meeting
-        def previous = repository.closestPreviousMeeting(meeting)
-        if (previous != null) {
-            def endOfLowerEntry = previous.meetingDate.plusHours(previous.duration)
-            if (meeting.meetingDate < endOfLowerEntry) return false
-        }
-        true
+        return findOverlappedMeetings(meeting) == 0
     }
 }

@@ -1,0 +1,9 @@
+<dataset>
+    <users id="1"/>
+    <rooms id="1"/>
+    <meetings DURATION='0000-03-01 00:00:00.000000000' submit_date="0000-03-01 00:00:00.0" meeting_start="0000-03-01 00:00:00.0"  room_id="1" user_id="1"/>
+    <!--<meetings DURATION="0000.03.01 00:00:00" meeting_start="0000.03.01 02:00:00" submit_date="0000.03.01 00:00:00" room_id="1" user_id="1"/>-->
+    <!--<meetings DURATION="0000.03.01 00:00:00" meeting_start="0000.03.01 01:00:00" submit_date="0000.03.01 00:00:00" room_id="1" user_id="1"/>-->
+    <!--<meetings DURATION="0000.03.01 00:00:00" meeting_start="0000.03.01 04:00:00" submit_date="0000.03.01 00:00:00" room_id="1" user_id="1"/>-->
+    <!--<meetings DURATION="0000.03.01 00:00:00" meeting_start="0000.03.01 06:00:00" submit_date="0000.03.01 00:00:00" room_id="1" user_id="1"/>-->
+</dataset>
