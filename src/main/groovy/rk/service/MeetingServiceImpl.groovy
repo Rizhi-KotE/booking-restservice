@@ -48,6 +48,7 @@ class MeetingServiceImpl implements MeetingService {
             throw new BookingException("no_room")
         }
         if (!excludeFallOutsideRequests(meeting, room.officeHoursBegin, room.officeHoursEnd)) {
+
             throw new BookingException("fall_outside_office_hours")
         }
         if (!excludeOverlappedRequests(meeting)) {

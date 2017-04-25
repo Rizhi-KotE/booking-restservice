@@ -3,10 +3,12 @@ package rk.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import rk.dto.BookingPageable
 import rk.dto.MeetingRestParams
 import rk.entity.Meeting
+import rk.exception.BookingException
 import rk.service.MeetingService
 
 import javax.validation.Valid
@@ -22,6 +24,13 @@ class MeetingRestController {
 
     @Autowired
     MeetingService service
+
+    @ResponseBody
+    @ExceptionHandler(BookingException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    String handleException(BookingException e) {
+        e.getMessage()
+    }
 
     /**
      * Returns the page of meetings to which applied the transformations described in MeetingRestParams javadoc

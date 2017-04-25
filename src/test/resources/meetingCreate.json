@@ -10,3 +10,39 @@
   },
   "duration": 2
 }
+
+{
+  "timestamp": "2017-04-25T15:33:10.020+0000",
+  "status": 400,
+  "error": "Bad Request",
+  "exception": "org.springframework.web.bind.MethodArgumentNotValidException",
+  "errors": [
+    {
+      "codes": [
+        "NotNull.meeting.room",
+        "NotNull.room",
+        "NotNull.rk.entity.Room",
+        "NotNull"
+      ],
+      "arguments": [
+        {
+          "codes": [
+            "meeting.room",
+            "room"
+          ],
+          "arguments": null,
+          "defaultMessage": "room",
+          "code": "room"
+        }
+      ],
+      "defaultMessage": "должно быть задано",
+      "objectName": "meeting",
+      "field": "room",
+      "rejectedValue": null,
+      "bindingFailure": false,
+      "code": "NotNull"
+    }
+  ],
+  "message": "Validation failed for object='meeting'. Error count: 1",
+  "path": "/meeting"
+}
