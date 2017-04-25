@@ -19,17 +19,14 @@ class Meeting {
     @GeneratedValue
     long id
 
-    @Column(name = 'submit_date')
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
     LocalDateTime submitDate
 
-    @Column(name = 'meeting_start')
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
     LocalDateTime meetingDateBegin
 
-    @Column(name = 'meeting_end')
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
     LocalDateTime meetingDateEnd

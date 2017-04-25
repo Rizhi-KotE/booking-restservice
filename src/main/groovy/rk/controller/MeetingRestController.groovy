@@ -2,7 +2,9 @@ package rk.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
+import rk.dto.BookingPageable
 import rk.dto.MeetingRestParams
 import rk.entity.Meeting
 import rk.service.MeetingService
@@ -22,19 +24,16 @@ class MeetingRestController {
     MeetingService service
 
     /**
-     * Returns the list of meetings to which the transformations described in MeetingRestParams doc
+     * Returns the page of meetings to which applied the transformations described in MeetingRestParams javadoc
      * @param params
      * @return
      */
     @RequestMapping
-    List<Meeting> getList(@RequestParam Map<String, String> params) {
-        service.findAll(mapper.convertValue(params, MeetingRestParams.class))
+    Page<Meeting> getList(@RequestParam Map<String, String> params) {
+        new BookingPageable<>(
+                service.findPageableFiltered(
+                        mapper.convertValue(params, MeetingRestParams.class)))
     }
-
-//    @RequestMapping
-//    List<Meeting> getOverlapped(@RequestBody Meeting meeting) {
-//
-//    }
 
     @RequestMapping(value = "/{id}")
     Meeting getById(@PathVariable long id) {

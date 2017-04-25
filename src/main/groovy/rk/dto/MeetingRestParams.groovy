@@ -39,10 +39,11 @@ class MeetingRestParams {
     @JsonProperty("order")
     Sort.Direction direction
     /**
-     * number of page, zero-based
+     * number of page, starts from one
      */
     @JsonProperty("page")
     Integer page
+
     /**
      * size of page
      */

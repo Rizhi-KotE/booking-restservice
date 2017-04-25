@@ -2,6 +2,7 @@ package rk.service
 
 import groovy.transform.PackageScope
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
@@ -56,10 +57,11 @@ class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    List<Meeting> findAll(@Valid MeetingRestParams options) {
+    Page<Meeting> findPageableFiltered(@Valid MeetingRestParams options) {
         def sort = options.sortColumn == null ? null : new Sort(options.direction, options.sortColumn)
-        def page = options.page == null ? null : new PageRequest(options.page, options.pageSize, sort)
-        repository.findAll(buildPredicate(options), page).toList()
+        def page = options.page == null ? new PageRequest(0, 10, sort) :
+                new PageRequest(options.page - 1, options.pageSize, sort)
+        repository.findAll(buildPredicate(options), page)
     }
 
     @Override
