@@ -86,7 +86,11 @@ class MeetingRepositoryTest {
         meeting5.submitDate = LocalDateTime.of(1, 1, 1, 1, 0)
         meeting5.room = this.room
         meeting5.user = this.user
-        repository.save(asList(meeting1, meeting2, meeting3, meeting4))
+        repository.save(meeting1)
+        repository.save(meeting2)
+        repository.save(meeting3)
+        repository.save(meeting4)
+        repository.save(meeting5)
     }
 
     @Test
@@ -104,9 +108,23 @@ class MeetingRepositoryTest {
     }
 
     @Test
+    void meetingExactlyOneTime() throws Exception {
+        def meeting = new Meeting()
+        meeting.meetingDateBegin = LocalDateTime.of(1, 1, 1, 0, 0)
+        meeting.meetingDateEnd = meeting.meetingDateBegin.plusHours(2)
+
+        meeting.room = room
+        meeting.user = user
+
+        def count = service.findOverlappedMeetings(meeting)
+
+        assertEquals(1, count)
+    }
+
+    @Test
     void meetingStartEqualEndOfLast() throws Exception {
         def meeting = new Meeting()
-        meeting.meetingDateBegin = LocalDateTime.of(1, 1, 1, 6, 0)
+        meeting.meetingDateBegin = LocalDateTime.of(1, 1, 1, 8, 0)
         meeting.meetingDateEnd = meeting.meetingDateBegin.plusHours(2)
         meeting.room = room
         meeting.user = user

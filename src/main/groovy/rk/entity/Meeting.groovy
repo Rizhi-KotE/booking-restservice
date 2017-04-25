@@ -21,14 +21,17 @@ class Meeting {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
+    @Column(name = 'submit_date')
     LocalDateTime submitDate
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
+    @Column(name = 'meeting_start')
     LocalDateTime meetingDateBegin
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
+    @Column(name = 'meeting_end')
     LocalDateTime meetingDateEnd
 
     @ManyToOne
