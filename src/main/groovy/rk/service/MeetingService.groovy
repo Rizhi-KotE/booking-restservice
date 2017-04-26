@@ -1,5 +1,6 @@
 package rk.service
 
+import org.springframework.data.domain.Page
 import rk.dto.MeetingRestParams
 import rk.entity.Meeting
 
@@ -12,9 +13,7 @@ interface MeetingService {
 
     Meeting create(Meeting meetingDto)
 
-    Meeting findMaxPrevious(Meeting meeting)
+    Page<Meeting> findPageableFiltered(MeetingRestParams params)
 
-    Meeting findMinFollowing(Meeting meeting)
-
-    List<Meeting> findAll(MeetingRestParams params)
+    long findOverlappedMeetings(Meeting meeting)
 }

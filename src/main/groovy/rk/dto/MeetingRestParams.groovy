@@ -10,7 +10,7 @@ class MeetingRestParams {
      * value to filter meetings by user id
      */
     @JsonProperty("user")
-    Long userId
+    String username
     /**
      * value to filter meetings by room id
      */
@@ -37,17 +37,18 @@ class MeetingRestParams {
      * order of sorting
      */
     @JsonProperty("order")
-    Sort.Direction direction
+    Sort.Direction direction = Sort.Direction.ASC
     /**
-     * number of page, zero-based
+     * number of page, starts from one
      */
     @JsonProperty("page")
     Integer page
+
     /**
      * size of page
      */
     @JsonProperty("page-size")
-    Integer pageSize
+    Integer pageSize = 10
 
     @AssertTrue
     boolean isValidTimeFilter() {

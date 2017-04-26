@@ -1,5 +1,7 @@
 package rk.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
+
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -15,7 +17,9 @@ class Room {
     long id
 
     @Column(name = 'office_hours_begin')
+    @JsonFormat(pattern = "HH:mm")
     LocalTime officeHoursBegin
     @Column(name = 'office_hours_end')
+    @JsonFormat(pattern = "HH:mm")
     LocalTime officeHoursEnd
 }

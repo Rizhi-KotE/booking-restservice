@@ -8,7 +8,9 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToOne
 import javax.persistence.Table
+import javax.validation.constraints.NotNull
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Entity
 @Table(name = 'meetings')
@@ -17,21 +19,27 @@ class Meeting {
     @GeneratedValue
     long id
 
-    @Column(name = 'submit_date')
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @NotNull
+    @Column(name = 'submit_date')
     LocalDateTime submitDate
 
-    @Column(name = 'meeting_start')
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    LocalDateTime meetingDate
+    @NotNull
+    @Column(name = 'meeting_start')
+    LocalDateTime meetingDateBegin
 
-    @Column(name = 'duration')
-    int duration
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @NotNull
+    @Column(name = 'meeting_end')
+    LocalDateTime meetingDateEnd
 
     @ManyToOne
+    @NotNull
     User user;
 
     @ManyToOne
+    @NotNull
     Room room
 
 }
